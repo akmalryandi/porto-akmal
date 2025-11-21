@@ -55,16 +55,16 @@
                 <div class="container">
                     <div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end"
                         data-scrollax-parent="true">
-                        {{-- <div class="one-third js-fullheight order-md-last img"
+                        <div class="one-third js-fullheight order-md-last img"
                             style="background-image: url('{{ asset('storage/' . optional($profile)->photo) }}');">
                             <div class="overlay"></div>
-                        </div> --}}
+                        </div>
                         <div class="one-forth d-flex  align-items-center ftco-animate"
                             data-scrollax=" properties: { translateY: '70%' }">
                             <div class="text">
                                 <span class="subheading">Hello!</span>
-                                <h1 class="mb-4 mt-3">I'm <span></span></h1>
-                                <h2 class="mb-4"></h2>
+                                <h1 class="mb-4 mt-3">I'm <span>{{ optional($profile)->name }}</span></h1>
+                                <h2 class="mb-4">{{ optional($profile)->bio }}</h2>
                                 <p><a href="#contact-section" class="btn btn-primary py-3 px-4">Contact me</a></p>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                     <div class="img-about img d-flex align-items-stretch">
                         <div class="overlay"></div>
                         <div class="img d-flex align-self-stretch align-items-center"
-                            style="">
+                            style="background-image:url({{ asset('storage/' . optional($profile)->galery) }});">
                         </div>
                     </div>
                 </div>
@@ -91,13 +91,13 @@
                         <div class="col-md-12 heading-section ftco-animate">
                             <h1 class="big">About</h1>
                             <h2 class="mb-4">About Me</h2>
-                            <p class="text-justify"></p>
+                            <p class="text-justify">{{ optional($profile)->about }}</p>
                             <ul class="about-info mt-4 px-md-0 px-2">
-                                <li class="d-flex"><span>Nama:</span> <span></span></li>
-                                <li class="d-flex"><span>Email:</span> <span></span>
+                                <li class="d-flex"><span>Nama:</span> <span>{{ optional($profile)->name }}</span></li>
+                                <li class="d-flex"><span>Email:</span> <span>{{ optional($profile)->email }}</span>
                                 </li>
                                 <li class="d-flex"><span>Nomor Telpon: </span>
-                                    <span></span>
+                                    <span>{{ optional($profile)->phone }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -117,16 +117,16 @@
                 </div>
             </div>
             <div class="row">
-
+                @foreach ($resumes as $resume)
                     <div class="col-md-6">
                         <div class="resume-wrap ftco-animate">
-                            <span class="date"></span>
-                            <h2></h2>
-                            <span class="position"></span>
-                            <p class="mt-4 text-justify"></p>
+                            <span class="date">{{ $resume->year }}</span>
+                            <h2>{{ $resume->job_title }}</h2>
+                            <span class="position">{{ $resume->company }}</span>
+                            <p class="mt-4 text-justify">{{ $resume->job_desc }}</p>
                         </div>
                     </div>
-
+                @endforeach
             </div>
         </div>
     </section>
@@ -142,15 +142,16 @@
             </div>
 
             <div class="row d-flex justify-content-center gap-4 mb-5">
-
+                @foreach ($tools as $tool)
                     <div class="col-auto d-flex ftco-animate">
                         <div class="box text-center">
                             <div class="icon d-flex align-items-center justify-content-center p-5">
-
+                                <img src="{{ asset('storage/' . $tool->icon_path) }}" alt="{{ $tool->name }}"
+                                    style="width: 65px; height: 65px; object-fit: contain;">
                             </div>
                         </div>
                     </div>
-
+                @endforeach
             </div>
 
         </div>
@@ -166,14 +167,14 @@
                 </div>
             </div>
             <div class="row">
-
+                @foreach ($projects as $project)
                     <div class="col-md-6">
                         <div class="resume-wrap ftco-animate position-relative">
                             <div class="d-flex justify-content-between align-items-start">
                                 <!-- Judul dan GitHub -->
                                 <div class="d-flex align-items-center">
-                                    <h2 class="mr-2"></h2>
-                                    <a class="mb-2" href="">
+                                    <h2 class="mr-2">{{ $project->title }}</h2>
+                                    <a class="mb-2" href="{{ $project->link }}">
                                         <img src="storage/tools/github.png" alt="github"
                                             style="width: 30px; height: 30px; object-fit: contain;">
                                     </a>
@@ -181,20 +182,23 @@
 
                                 <!-- Tools di kanan atas -->
                                 <div class="d-flex position-absolute" style="top: 20px; right: 10px;">
-
-
+                                    @foreach ($project->tools as $tool)
+                                        <img src="{{ asset('storage/' . $tool->icon_path) }}"
+                                            alt="{{ $tool->name }}"
+                                            style="width: 25px; height: 25px; object-fit: contain; margin-left: 8px;">
+                                    @endforeach
                                 </div>
                             </div>
 
                             <div class="project img ftco-animate d-flex justify-content-center align-items-center"
-                                style="">
+                                style="background-image: url('{{ asset('storage/' . $project->image) }}');">
                                 <div class="overlay"></div>
                                 <div class="text text-center p-1"></div>
                             </div>
-                            <p class="mt-4 text-justify"></p>
+                            <p class="mt-4 text-justify">{{ $project->description }}</p>
                         </div>
                     </div>
-
+                @endforeach
 
             </div>
         </div>
@@ -216,7 +220,7 @@
                             <span class="icon-phone2"></span>
                         </div>
                         <h3 class="mb-4">Contact Number</h3>
-                        <p></p>
+                        <p>{{ optional($profile)->phone }}</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 d-flex ftco-animate">
@@ -225,16 +229,16 @@
                             <span class="icon-paper-plane"></span>
                         </div>
                         <h3 class="mb-4">Email Address</h3>
-                        <p></p>
+                        <p>{{ optional($profile)->email }}</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 d-flex ftco-animate">
                     <div class="align-self-stretch box p-4 text-center">
                         <div class="icon d-flex align-items-center justify-content-center">
-                            <a href=""> <span class="icon-globe"></span></a>
+                            <a href="{{ optional($profile)->linkedin }}"> <span class="icon-globe"></span></a>
                         </div>
                         <h3 class="mb-4">LinkedIn</h3>
-                        <p></p>
+                        <p>{{ optional($profile)->name }}</p>
                     </div>
                 </div>
             </div>
@@ -251,8 +255,8 @@
                         <script>
                             document.write(new Date().getFullYear());
                         </script> All rights reserved | <i class=" color-danger"
-                            aria-hidden="true"></i> by <a href=""
-                            target="_blank"></a>
+                            aria-hidden="true"></i> by <a href="{{ optional($profile)->github }}"
+                            target="_blank">{{ optional($profile)->name }}</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>

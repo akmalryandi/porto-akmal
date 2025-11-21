@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Data Products</h3>
+            <h3 class="card-title">Data Profiles</h3>
         </div>
 
         <div class="d-flex bd-highlight mt-3">
